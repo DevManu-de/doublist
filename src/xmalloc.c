@@ -26,6 +26,7 @@ void *xrealloc(void *pntr, size_t bytes) {
 
 void xfree(void *pntr) {
 	free(pntr);
+	pntr = NULL;
 }
 
 

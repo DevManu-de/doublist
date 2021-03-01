@@ -6,9 +6,9 @@
 
 int main() {
 
-	char *a = "asdfghjkl";
+	char *a = "asdfghjklv";
 	
-	struct __doublist__ *list = doublist_create();
+	struct doublist *list = doublist_create();
 
 
 	unsigned int i;
@@ -20,13 +20,16 @@ int main() {
 		node_insert_after(list, NULL, node_create(b, 1));
 	}
 
-	struct __node__  *node = list->head;
+	char *x = strdup("A");
+	node_modify(list, list->tail, node_create(x, 1), 2, 1);
+
+	struct node  *node = list->head;
 	while (node != NULL) {
 		putc(((char *)(node->value))[0], stdout);
 		node = node->next;
 	}
-	
-	printf("\n");
+
+	printf("\n%s\n", ((char *) node_find(list, NULL, "A", 1, 1, FORWARD)->value));
 
 	doublist_free(list);
 

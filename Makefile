@@ -3,7 +3,7 @@
 # https://github.com/danielpinto8zz6/c-cpp-project-generator/blob/master/templates/c/Makefile
 
 CC = gcc
-CFLAGS := -ansi -Wall -Wextra -g -lm
+CFLAGS := -std=gnu89 -Wall -Wextra -g
 LFLAGS =
 OUTPUT := output
 SRC := src

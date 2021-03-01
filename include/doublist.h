@@ -1,43 +1,43 @@
 #ifndef _DOUBLIST_H
 #define _DOUBLIST_H
 
-#define __STANDALONE__ 0
-#define __INLIST__ 1
+#define STANDALONE 0
+#define INLIST 1
 
-struct __node__ {
+struct node {
 	
 	void *value;
 	int type;
-	struct __node__ *next;
-	struct __node__ *prev;
+	struct node *next;
+	struct node *prev;
 	int is_in_list : 1;
 
 };
 
-struct __doublist__ {
+struct doublist {
 	
-	struct __node__ *head;
-	struct __node__ *tail;
+	struct node *head;
+	struct node *tail;
 	int size;
 
 };
 
-struct __doublist__ *doublist_create();
-struct __node__ *node_create(void *value, int type);
+struct doublist *doublist_create();
+struct node *node_create(void *value, int type);
 
-void node_insert_after(struct __doublist__ *doublist, struct __node__ *node, struct __node__ *new_node);
-void node_insert_before(struct __doublist__ *doublist, struct __node__ *node, struct __node__ *new_node);
+void node_insert_after(struct doublist *doublist, struct node *node, struct node *new_node);
+void node_insert_before(struct doublist *doublist, struct node *node, struct node *new_node);
 
 #define FORWARD 0
 #define BACKWARD 1
-struct __node__ *node_find(struct __doublist__ *doublist, struct __node__ *start, void *value, int type, unsigned long size, int direction);
-struct __node__ *node_modify(struct __doublist__ *doublist, struct __node__ *node_old, struct __node__ *node_new);
+struct node *node_find(struct doublist *doublist, struct node *start, void *value, int type, unsigned long size, int direction);
+struct node *node_modify(struct doublist *doublist, struct node *node_old, struct node *node_new, unsigned long size, unsigned int free_node_new);
 
-struct __node__ *node_remove(struct __doublist__ *doublist, struct __node__ *node);
+struct node *node_remove(struct doublist *doublist, struct node *node);
 
-void doublist_free(struct __doublist__ *doublist);
-void node_free(struct __doublist__ *doublist, struct __node__ *node);
+void doublist_free(struct doublist *doublist);
+void node_free(struct doublist *doublist, struct node *node);
 
-int doublist_get_size(struct __doublist__ *doublist);
+int doublist_get_size(struct doublist *doublist);
 
 #endif

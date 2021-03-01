@@ -4,9 +4,9 @@
 
 #include "xmalloc.h"
 
-struct __doublist__ *doublist_create() {
+struct doublist *doublist_create() {
 
-	struct __doublist__ *doublist = xmalloc(sizeof(struct __doublist__));
+	struct doublist *doublist = xmalloc(sizeof(struct doublist));
 	doublist->head = NULL;
 	doublist->tail = NULL;
 	doublist->size = 0;
@@ -14,22 +14,26 @@ struct __doublist__ *doublist_create() {
 	return doublist;
 }
 
-struct __node__ *node_create(void *value, int type) {
+struct node *node_create(void *value, int type) {
 	
-	struct __node__ *node = xmalloc(sizeof(struct __node__));
+	struct node *node = xmalloc(sizeof(struct node));
 	node->next = NULL;
 	node->prev = NULL;
 	node->value = value;
 	node->type = type;
-	node->is_in_list = __STANDALONE__;
+	/* STANDALONE means that this node is not in a doublist */
+	node->is_in_list = STANDALONE;
 	
 	return node;
 
 }
 
-void node_insert_after(struct __doublist__ *doublist, struct __node__ *node, struct __node__ *new_node) {
+/* Inserts a allocated node after the node */
+void node_insert_after(struct doublist *doublist, struct node *node, struct node *new_node) {
 
+	/* If node provided is NULL append it to the end of doublist */
 	if (node == NULL) {
+		/* If doublist has no nodes */
 		if (doublist_get_size(doublist) == 0) {
 			
 			doublist->head = new_node;
@@ -44,6 +48,7 @@ void node_insert_after(struct __doublist__ *doublist, struct __node__ *node, str
 		}
 
 	} else {
+		/* If new node should be appended to the last node */
 		if (node->next == NULL) {
 			
 			node->next = new_node;
@@ -62,13 +67,16 @@ void node_insert_after(struct __doublist__ *doublist, struct __node__ *node, str
 	}
 	
 	++doublist->size;
-	new_node->is_in_list = __INLIST__;
+	new_node->is_in_list = INLIST;
 
 }
 
-void node_insert_before(struct __doublist__ *doublist, struct __node__ *node, struct __node__ *new_node) {
+/* Inserts a allocated node before the node */
+void node_insert_before(struct doublist *doublist, struct node *node, struct node *new_node) {
 
+	/* If node provided is NULL insert it to the start of doublist */
 	if (node == NULL) {
+		/* If doublist has no nodes */
 		if (doublist_get_size(doublist) == 0) {
 			
 			doublist->head = new_node;
@@ -83,6 +91,7 @@ void node_insert_before(struct __doublist__ *doublist, struct __node__ *node, st
 		}
 
 	} else {
+		/* If new node should be inserted before the first node */
 		if (node->prev == NULL) {
 			
 			node->prev = new_node;
@@ -101,12 +110,17 @@ void node_insert_before(struct __doublist__ *doublist, struct __node__ *node, st
 	}
 
 	++doublist->size;
-	new_node->is_in_list = __INLIST__;
+	new_node->is_in_list = INLIST;
 
 }
 
-
-struct __node__ *node_find(struct __doublist__ *doublist, struct __node__ *start, void *value, int type, unsigned long size, int direction) {
+/* Find a node in doublist.
+ * Start looking from start to the given direction. For a match value and type have to match. size is the length for comparing
+ * the void *.
+ * If start is NULL start from head or tal depending on the direction.
+ * If size == 0 then the return will be the first node that matches the type.
+ * If no node mathes NULL is returned. */
+struct node *node_find(struct doublist *doublist, struct node *start, void *value, int type, unsigned long size, int direction) {
 
 	if (start == NULL) {
 		if (direction == FORWARD) {
@@ -140,18 +154,24 @@ struct __node__ *node_find(struct __doublist__ *doublist, struct __node__ *start
 	return NULL;
 }
 
-struct __node__ *node_modify(struct __doublist__ *doublist, struct __node__ *node_old, struct __node__ *node_new) {
+/* Modifies the contents of node_old.
+ * size is the size of the value of the node_new. 
+ * free_node_new is a boolean. If 1 free new_node otherwise dont*/
+struct node *node_modify(struct doublist *doublist, struct node *node_old, struct node *node_new, unsigned long size, unsigned int free_node_new) {
 
-	node_old->value = node_new->value;
+	node_old->value = memmove(node_old->value, node_new->value, size);
 	node_old->type = node_new->type;
-	node_free(doublist, node_new);
+	if (free_node_new == 1)
+		node_free(doublist, node_new);
 	return node_old;
 
 }
 
-struct __node__ *node_remove(struct __doublist__ *doublist, struct __node__ *node) {
+/* Removes a node from a doublist but doesnt free is.
+ * Returns a pointer to the isolated node. */
+struct node *node_remove(struct doublist *doublist, struct node *node) {
 
-	if (node->is_in_list != __STANDALONE__) {
+	if (node->is_in_list != STANDALONE) {
 		if (doublist->head == node && doublist->tail == node) {
 			doublist->head = NULL;
 			doublist->tail = NULL;
@@ -177,11 +197,12 @@ struct __node__ *node_remove(struct __doublist__ *doublist, struct __node__ *nod
 
 }
 
-void doublist_free(struct __doublist__ *doublist) {
+/* Frees the entire doublist with all nodes. */
+void doublist_free(struct doublist *doublist) {
 
-	struct __node__ *node = doublist->head;
+	struct node *node = doublist->head;
 	while (node != NULL) {
-		struct __node__ *tmp = node->next;
+		struct node *tmp = node->next;
 		node_free(doublist, node);
 		node = tmp;
 	}
@@ -189,7 +210,9 @@ void doublist_free(struct __doublist__ *doublist) {
 
 }
 
-void node_free(struct __doublist__ *doublist, struct __node__ *node) {
+/* Frees a node.
+ * Node doesnt have to be in a list. */
+void node_free(struct doublist *doublist, struct node *node) {
 
 	node = node_remove(doublist, node);
 	xfree(node->value);
@@ -197,7 +220,8 @@ void node_free(struct __doublist__ *doublist, struct __node__ *node) {
 
 }
 
-int doublist_get_size(struct __doublist__ *doublist) {
+/* Returns the amount of nodes in a list. */
+int doublist_get_size(struct doublist *doublist) {
 	return doublist->size;
 
 }
