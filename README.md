@@ -1,14 +1,12 @@
 # doublist
 A simple implementation of a doubly linked list.
 
-# Description
-
-
 # Usage
 
 ## Structures
 >
 > struct node
+> 
 > struct doublist
 
 
