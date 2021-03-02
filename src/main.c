@@ -30,6 +30,7 @@ int main() {
 	}
 
 	printf("\n%s\n", ((char *) node_find(list, NULL, "A", 1, 1, FORWARD)->value));
+	printf("%d\n", doublist_get_size(list));
 
 	doublist_free(list);
 
