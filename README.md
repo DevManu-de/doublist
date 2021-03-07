@@ -6,9 +6,9 @@ The currently easiest way to include it into your project is to copy `src/doubli
 
 ## Structures
 >
-> struct node
+> struct node (more info in include/doublist.h)
 > 
-> struct doublist
+> struct doublist (more info in include/doublist.h)
 
 
 ## doublist_create() 
