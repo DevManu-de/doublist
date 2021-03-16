@@ -2,14 +2,13 @@
 #include <string.h>
 
 #include "doublist.h"
-#include "xmalloc.h"
+#include "xmemtools.h"
 
 int main() {
 
 	char *a = "asdfghjklv";
 	
 	struct doublist *list = doublist_create();
-
 
 	unsigned int i;
 	for (i = 0; i < strlen(a); ++i) {

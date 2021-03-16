@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-#include "xmalloc.h"
+#include "xmemtools.h"
 
 struct doublist *doublist_create() {
 

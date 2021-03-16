@@ -5,48 +5,43 @@
 CC = gcc
 CFLAGS := -std=gnu89 -Wall -Wextra -g
 LFLAGS =
-OUTPUT := output
 SRC := src
 INCLUDE := include
-LIB := lib
 
-MAIN := doublist
+AR = ar
+ARFLAGS = rcs
+
+MAIN := libdoublist
 SOURCEDIRS := $(shell find $(SRC) -type d)
 INCLUDEDIRS := $(shell find $(INCLUDE) -type d)
-LIBDIRS := $(shell find $(LIB) -type d)
 FIXPATH = $1
 RM = rm -rf
 MD := mkdir -p
 
 INCLUDES := $(patsubst %,-I%, $(INCLUDEDIRS:%/=%))
-LIBS := $(patsubst %,-L%, $(LIBDIRS:%/=%))
 SOURCES := $(wildcard $(patsubst %,%/*.c, $(SOURCEDIRS)))
 OBJECTS := $(SOURCES:.c=.o)
-OUTPUTMAIN := $(call FIXPATH,$(OUTPUT)/$(MAIN))
 
-all: $(OUTPUT) $(MAIN)
+all: $(MAIN)
 	@echo Executing "all" complete!
 
-$(OUTPUT):
-	$(MD) $(OUTPUT)
-
 $(MAIN): $(OBJECTS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(OUTPUTMAIN) $(OBJECTS) $(LFLAGS) $(LIBS)
+	$(AR) $(ARFLAGS) $(MAIN).a $(OBJECTS)
 
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-	ctags -R $(SRC) $(INCLUDE) $(LIB)
+	ctags -R $(SRC) $(INCLUDE)
 
 .PHONY: clean
 clean:
-	$(RM) $(OUTPUT)
+	$(RM) $(MAIN).a
 	$(RM) $(call FIXPATH,$(OBJECTS))
+	make -C ./test clean
 	@echo Cleanup complete!
 
-run: all
-	./$(OUTPUTMAIN)
-	@echo Executing "run: all" complete
-
+.PHONY: test
+test:
+	make -C ./test
 
 #                     GNU GENERAL PUBLIC LICENSE
 #                        Version 3, 29 June 2007
