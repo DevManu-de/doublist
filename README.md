@@ -2,7 +2,8 @@
 A simple implementation of a doubly linked list.
 
 # Usage
-The currently easiest way to include it into your project is to copy `src/doublist.c`, `src/xmalloc.c`, `include/doublist.h` and `include/xmalloc.h` to your own project. If wanted the xmalloc functions could also be replaced with normal malloc.
+doublist is equipped with a makefile that allows you to generate a `.a` file.
+To do so just type `make` in the root directory of the project.
 
 ## Structures
 >
