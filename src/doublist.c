@@ -136,8 +136,8 @@ struct node *node_find(struct doublist *doublist, struct node *start, void *valu
 				if (memcmp(start->value, value, size) == 0) {
 					return start;
 				}
-				start = start->next;
 			}
+			start = start->next;
 		}
 
 	} else {
@@ -146,8 +146,8 @@ struct node *node_find(struct doublist *doublist, struct node *start, void *valu
 				if (memcmp(start->value, value, size)) {
 					return start;
 				}
-				start = start->prev;
 			}
+			start = start->prev;
 		}
 	}
 
