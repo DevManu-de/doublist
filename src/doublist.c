@@ -159,9 +159,10 @@ struct node *node_find(struct doublist *doublist, struct node *start, void *valu
  * free_node_new is a boolean. If 1 free new_node otherwise dont*/
 struct node *node_modify(struct doublist *doublist, struct node *node_old, struct node *node_new, unsigned long size, unsigned int free_node_new) {
 
-	node_old->value = memmove(node_old->value, node_new->value, size);
+    xfree(node_old->value);
+    node_old->value = xmemdup(node_new->value, size);
 	node_old->type = node_new->type;
-	if (free_node_new == 1)
+	if (free_node_new)
 		node_free(doublist, node_new);
 	return node_old;
 
