@@ -143,7 +143,7 @@ struct node *node_find(struct doublist *doublist, struct node *start, void *valu
 	} else {
 		while (start != NULL) {
 			if (start->type == type) {
-				if (memcmp(start->value, value, size)) {
+				if (memcmp(start->value, value, size) == 0) {
 					return start;
 				}
 			}
