@@ -21,8 +21,8 @@ int main() {
 
 	char *x = strdup("ASDF");
 	node_modify(list, list->tail, node_create(x, 1), 5, 1);
-    node_free(list, list->head->next);
-    node_free(list, list->tail->prev);
+    node_free(list, list->head);
+    node_free(list, list->tail);
 
 	struct node  *node = list->head;
 	while (node != NULL) {
@@ -31,7 +31,7 @@ int main() {
 	}
 
 
-	printf("\n%s\n", ((char *) node_find(list, NULL, "A", 1, 1, FORWARD)->value));
+	//printf("\n%s\n", ((char *) node_find(list, NULL, "A", 1, 1, FORWARD)->value));
 	printf("%d\n", doublist_get_size(list));
 
 	doublist_free(list);
