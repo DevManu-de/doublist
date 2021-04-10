@@ -9,6 +9,8 @@ All you have to do now is to copy `include/doublist.h` and `libdoublist.a` to yo
 
 ## Structures
 >
+> enum node_types (more info in include/doublist.h)
+>
 > struct node (more info in include/doublist.h)
 > 
 > struct doublist (more info in include/doublist.h)
@@ -20,7 +22,7 @@ All you have to do now is to copy `include/doublist.h` and `libdoublist.a` to yo
 
 ## node_create()
 > 1. Argument is a void \*
-> 2. Argument is an integer. (Use this to determine the value of argument 1)
+> 2. Argument is an enum node_types. (Use this to determine the type of argument 1)
 >
 > Returns a pointer to a 
 
@@ -42,7 +44,7 @@ All you have to do now is to copy `include/doublist.h` and `libdoublist.a` to yo
 > 1. Argument is the pointer to an allocated doublist
 > 2. Argument is the pointer to a node from where to start looking for (If NULL then use argument 6 to determine whether to start from head or tail of doublist)
 > 3. Argument is a void * (Same as node_create)
-> 4. Argument is an integer (Same as node_create)
+> 4. Argument is an enum node_types (Same as node_create)
 > 5. Argument is an unsigned long for comparing the void \*'s
 > 6. Argument is a direction (FORWARD / BACKWARD) 
 >
@@ -78,3 +80,10 @@ All you have to do now is to copy `include/doublist.h` and `libdoublist.a` to yo
 > 1. Argument is the pointer to an allocated doublist
 > 
 > Returns the amount of nodes in the list as an integer
+
+## doublist_print()
+> ITS RECOMMENDED TO USE THIS ONLY FOR DEBUG REASONS
+> 1. Argument is the pointer to an allocated doublist
+>
+> Prints all `void *` to stdout based on the type on each node (more info in src/doublist.c)
+> Returns NONE (void)

@@ -12,27 +12,29 @@ int main() {
 
 	unsigned int i;
 	for (i = 0; i < strlen(a); ++i) {
-		char *b = xmalloc(2);
-		b[0] = a[i];
-		b[1] = '\0';
-			
-		node_insert_after(list, NULL, node_create(b, 1));
+		node_insert_after(list, NULL, node_create(strndup(a+i, 1), STRING_TYPE));
 	}
 
 	char *x = strdup("ASDF");
-	node_modify(list, list->tail, node_create(x, 1), 5, 1);
+	node_modify(list, list->tail, node_create(x, STRING_TYPE), 5, 1);
     node_free(list, list->head);
     node_free(list, list->tail);
 
-	struct node  *node = list->head;
-	while (node != NULL) {
-		putc(((char *)(node->value))[0], stdout);
-		node = node->next;
-	}
+    ITER_DOUBLIST(list, n, 
+            putc(((char *)(n->value))[0], stdout);
+            )
 
+    putc('\n', stdout);
+    doublist_print(list);
 
-	//printf("\n%s\n", ((char *) node_find(list, NULL, "A", 1, 1, FORWARD)->value));
-	printf("%d\n", doublist_get_size(list));
+    ITER_DOUBLIST(list, n, 
+            putc(((char *)(n->value))[0], stdout);
+            )
+    putc('\n', stdout);
+
+	//printf("\n%s\n", ((char *) node_find(list, NULL, "f", STRING_TYPE, 1, FORWARD)->value));
+	//printf("%d\n", doublist_get_size(list));
+    puts("SUCCESS");
 
 	doublist_free(list);
 
