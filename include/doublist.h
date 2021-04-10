@@ -16,6 +16,8 @@ enum node_types {
     INT_TYPE,
     LONG_TYPE,
     LONG_LONG_TYPE,
+    FLOAT_TYPE,
+    DOUBLE_TYPE,
     STRING_TYPE,
     UNSIGNED_CHAR_TYPE,
     UNSIGNED_SHORT_TYPE,

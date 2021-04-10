@@ -251,6 +251,12 @@ void doublist_print(struct doublist *doublist) {
             case LONG_LONG_TYPE:
                 printf("%d\n", ((char *) n->value)[0]);
                 break;
+            case FLOAT_TYPE:
+                printf("%f\n", ((float *) n->value)[0]);
+                break;
+            case DOUBLE_TYPE:
+                printf("%f\n", ((double *) n->value)[0]);
+                break;
             case STRING_TYPE:
                 printf("%s\n", (char *) n->value);
                 break;
