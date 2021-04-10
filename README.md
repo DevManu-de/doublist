@@ -86,4 +86,5 @@ All you have to do now is to copy `include/doublist.h` and `libdoublist.a` to yo
 > 1. Argument is the pointer to an allocated doublist
 >
 > Prints all `void *` to stdout based on the type on each node (more info in src/doublist.c)
+>
 > Returns NONE (void)
