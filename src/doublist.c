@@ -209,7 +209,7 @@ void doublist_free(struct doublist *doublist) {
 		node = tmp;
 	}
 	xfree(doublist);
-
+    
 }
 
 /* Frees a node.

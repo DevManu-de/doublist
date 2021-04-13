@@ -57,8 +57,8 @@ void node_insert_before(struct doublist *doublist, struct node *node, struct nod
 #define FORWARD     0
 #define BACKWARD    1
 struct node *node_find(struct doublist *doublist, struct node *start, void *value, enum node_types type, unsigned long size, int direction);
-struct node *node_modify(struct doublist *doublist, struct node *node_old, struct node *node_new, unsigned long size, unsigned int free_node_new);
 
+struct node *node_modify(struct doublist *doublist, struct node *node_old, struct node *node_new, unsigned long size, unsigned int free_node_new);
 struct node *node_remove(struct doublist *doublist, struct node *node);
 
 void doublist_free(struct doublist *doublist);
