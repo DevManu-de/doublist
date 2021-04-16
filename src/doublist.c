@@ -208,6 +208,7 @@ void doublist_free(struct doublist *doublist) {
 		node_free(doublist, node);
 		node = tmp;
 	}
+
 	xfree(doublist);
     
 }
@@ -225,7 +226,6 @@ void node_free(struct doublist *doublist, struct node *node) {
 /* Returns the amount of nodes in a list. */
 int doublist_get_size(struct doublist *doublist) {
 	return doublist->size;
-
 }
 
 /* ATTENTION THIS SHOULD NOT BE USED NORMALLY ITS DESIGNED TO DEBUG */
