@@ -17,7 +17,7 @@ All you have to do now is to copy `include/doublist.h` and `libdoublist.a` to yo
 
 
 ## doublist_create() 
-> Returns a pointer to doublist
+> Returns a pointer to an empty allocated doublist
 >
 
 ## node_create()
